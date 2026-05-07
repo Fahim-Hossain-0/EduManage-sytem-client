@@ -1,8 +1,11 @@
-import React from 'react';
+
 import Logo from '../../components/Logo';
 import { Link, NavLink } from 'react-router';
+import useAuth from '../../hook/useAuth';
+import Loading from '../../components/Loading';
 
 const Navbar = () => {
+  const { user,logOut,loading } = useAuth();
 
     const link = <>
        
@@ -13,7 +16,9 @@ const Navbar = () => {
             <li><NavLink to=''>About</NavLink></li>
         
     </>
-    
+    if(loading){
+      return <Loading></Loading>
+    }
     return (
         <div className="navbar bg-base-100 shadow-sm">
   <div className="navbar-start">
@@ -37,27 +42,26 @@ const Navbar = () => {
   <div className="navbar-end">
     <div className="flex-none">
     
-    <div className="dropdown dropdown-end">
+    {
+      user? <div className="dropdown dropdown-end">
       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
         <div className="w-10 rounded-full">
           <img
-            alt="Tailwind CSS Navbar component"
-            src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+            alt="profile picture"
+            src={user.photoURL} />
         </div>
       </div>
       <ul
         tabIndex="-1"
         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
         <li>
-          <a className="justify-between">
-            Profile
-            <span className="badge">New</span>
-          </a>
+          <p>{user.displayName}</p>
         </li>
-        <li><a>Settings</a></li>
-        <li><a>Logout</a></li>
+        <li><Link to="/dashboard">Dashboard</Link></li>
+        <li><p onClick={logOut}>Logout</p></li>
       </ul>
-    </div>
+    </div>: <Link to="/login" className="btn">Login</Link>
+    }
   </div>
   </div>
 </div>

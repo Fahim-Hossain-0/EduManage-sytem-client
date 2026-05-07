@@ -55,6 +55,7 @@ const MostPopular = () => {
 
         <Swiper
           modules={[Autoplay, Navigation]}
+          swiper-button-disabled
           spaceBetween={20}
           slidesPerView={1}
           loop={true} // 🔥 Infinite loop

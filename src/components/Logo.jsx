@@ -1,4 +1,4 @@
-import React from 'react';
+
 import logoImg from '../assets/high-resolution-logo-grayscale.png';
 const Logo = () => {
     return (
