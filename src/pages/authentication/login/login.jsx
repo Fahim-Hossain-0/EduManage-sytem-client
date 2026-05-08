@@ -1,15 +1,17 @@
-import React from 'react';
+
 import { useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router';
 import toast from 'react-hot-toast';
 import useAuth from '../../../hook/useAuth';
 import SocialLogin from '../socialLogin/SocialLogin';
+import useAxios from '../../../hook/useAxios';
 
 
 
 const Login = () => {
 
-    const { signInUser } = useAuth();
+    const { login } = useAuth();
+    const axiosInstance = useAxios();
 
     const {
         register,
@@ -22,21 +24,31 @@ const Login = () => {
 
     const from = location.state?.from || '/';
 
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
 
-        signInUser(data.email, data.password)
-            .then(result => {
-                console.log(result.user);
+    try {
 
-                toast.success('Login Successful');
+        const result = await login(data.email, data.password);
 
-                navigate(from);
-            })
-            .catch(error => {
-                console.error(error);
-                toast.error('Invalid Email or Password');
-            })
+        console.log(result.user);
+
+        // update last login time
+        await axiosInstance.patch(`/users`, {
+            email: data.email,
+            last_log_in: new Date().toISOString()
+        });
+
+        toast.success('Login Successful');
+
+        navigate(from);
+
+    } catch (error) {
+
+        console.error(error);
+
+        toast.error('Invalid Email or Password');
     }
+}
 
     return (
         <div className="min-h-screen bg-base-200 flex items-center justify-center px-4">
