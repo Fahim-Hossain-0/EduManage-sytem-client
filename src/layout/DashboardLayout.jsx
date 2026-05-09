@@ -1,6 +1,6 @@
 // src/layouts/DashboardLayout.jsx
 
-import { NavLink, Outlet } from "react-router";
+import { Link, NavLink, Outlet } from "react-router";
 import {
   LayoutDashboard,
   Users,
@@ -14,7 +14,7 @@ import useAuth from "../hook/useAuth";
 import useUserRole from "../hook/useUserRole";
 
 const DashboardLayout = () => {
-  // const {user} = useAuth()
+  const {user, logOut} = useAuth()
   const {role} = useUserRole()
   
   return (
@@ -42,10 +42,10 @@ const DashboardLayout = () => {
           </div>
 
           <div className="flex-none">
-            <button className="btn btn-error btn-sm text-black">
+            {user && <button onClick={logOut} className="btn btn-error btn-sm text-black">
               <LogOut size={18} />
               Logout
-            </button>
+            </button>}
           </div>
         </div>
 
@@ -67,12 +67,14 @@ const DashboardLayout = () => {
 
           {/* Logo */}
           <div className="p-6 border-b border-base-300">
+            <Link to="/">
             <h1 className="text-3xl font-bold text-primary">
               EduManage
             </h1>
             <p className="text-sm opacity-70">
                <span>{role} Dashboard</span>
             </p>
+            </Link>
           </div>
 
           {/* Menu */}
