@@ -55,18 +55,25 @@ const AddClass = () => {
 
             // save class in database
             const classRes = await axiosSecure.post(
-                "/add-classes",
+                "/add-class",
                 classData
             );
 
-            if (classRes.data.insertedId) {
+            console.log(classData);
 
-                toast.success("Class Added Successfully");
+            if (classRes.data.data.insertedId) {
+                
 
-                reset();
+    toast.success("Class Added Successfully");
 
-                navigate("/dashboard/my-classes");
-            }
+    reset();
+
+    setTimeout(() => {
+
+        navigate("/dashboard/my-classes");
+
+    }, 1500);
+}
 
         } catch (error) {
             console.log(error);

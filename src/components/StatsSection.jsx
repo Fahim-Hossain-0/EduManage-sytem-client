@@ -1,20 +1,42 @@
 // src/components/StatsSection.jsx
 
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+
+import useAxiosSecure from "../hook/useAxiosSecure";
+import { useState } from "react";
 
 const StatsSection = () => {
-  const [stats, setStats] = useState({
-    users: 0,
-    classes: 0,
-    enrollments: 0,
-  });
+  const axiosSecure = useAxiosSecure()
+  
 
-  useEffect(() => {
-    fetch("http://localhost:5000/api/stats") // 🔥 your API
-      .then((res) => res.json())
-      .then((data) => setStats(data))
-      .catch((err) => console.error(err));
-  }, []);
+ const { data:classes} = useQuery({
+    queryKey: ['classes',],
+    queryFn: async () => {
+
+        const res = await axiosSecure.get(
+            `/all-classes`
+        );
+        
+        return res.data;
+    }
+});
+ const { data:users} = useQuery({
+    queryKey: ['users',],
+    queryFn: async () => {
+
+        const res = await axiosSecure.get(
+            `/all-users`
+        );
+       
+        return res.data;
+    }
+});
+
+// const classes = data?.classes || [];
+
+// const totalClasses = data?.totalClasses || 0;
+
+
 
   return (
     <section className="py-20 bg-base-100">
@@ -28,7 +50,7 @@ const StatsSection = () => {
             {/* Total Users */}
             <div className="bg-base-200 rounded-2xl p-6 text-center shadow">
               <h2 className="text-3xl font-bold text-primary">
-                {stats.users}
+                {users?.allUserNumber}
               </h2>
               <p className="text-gray-500 mt-2">Total Users</p>
             </div>
@@ -36,7 +58,7 @@ const StatsSection = () => {
             {/* Total Classes */}
             <div className="bg-base-200 rounded-2xl p-6 text-center shadow">
               <h2 className="text-3xl font-bold text-secondary">
-                {stats.classes}
+                {classes?.totalClasses}
               </h2>
               <p className="text-gray-500 mt-2">Total Classes</p>
             </div>
@@ -44,7 +66,7 @@ const StatsSection = () => {
             {/* Total Enrollment */}
             <div className="bg-base-200 rounded-2xl p-6 text-center shadow">
               <h2 className="text-3xl font-bold text-accent">
-                {stats.enrollments}
+                {classes?.totalEnrollments}
               </h2>
               <p className="text-gray-500 mt-2">Total Enrollments</p>
             </div>
