@@ -69,7 +69,7 @@ const Register = () => {
       const userInfo = {
         name: data.name,
         email: data.email,
-        role: "user",
+        role: "student",
         image: profilePic,
         createdAt: new Date(),
       };

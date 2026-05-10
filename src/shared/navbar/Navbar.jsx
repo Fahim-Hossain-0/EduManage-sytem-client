@@ -11,7 +11,7 @@ const Navbar = () => {
        
             <li><NavLink to='/'>Home</NavLink></li>
             <li><NavLink to=''>All Classes</NavLink></li>
-            <li><NavLink to=''>EduMange</NavLink></li>
+            <li><NavLink to='/teacher-request'>Became Teacher</NavLink></li>
             <li><NavLink to=''>Contact</NavLink></li>
             <li><NavLink to=''>About</NavLink></li>
         

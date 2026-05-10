@@ -30,7 +30,7 @@ const BecomeTeacher = () => {
             </ul>
 
             {/* CTA BUTTON */}
-            <Link to="/teach">
+            <Link to="/teacher-request">
               <button className="btn bg-white text-indigo-600 hover:bg-gray-100 border-none px-8">
                 Start Teaching Today
               </button>

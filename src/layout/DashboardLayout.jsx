@@ -27,7 +27,7 @@ const DashboardLayout = () => {
       <div className="drawer-content flex flex-col bg-base-200">
 
         {/* Top Navbar */}
-        <div className="navbar bg-base-100 shadow-sm px-4">
+        <div className="navbar bg-base-100 shadow-sm px-4 sticky top-0 z-10">
           <div className="flex-none lg:hidden">
             <label
               htmlFor="dashboard-drawer"
@@ -95,7 +95,7 @@ const DashboardLayout = () => {
 
             <li>
               <NavLink
-                to="/dashboard/users"
+                to="/dashboard/manage-users"
                 className={({ isActive }) =>
                   isActive ? "active font-semibold" : ""
                 }
@@ -107,7 +107,7 @@ const DashboardLayout = () => {
 
             <li>
               <NavLink
-                to="/dashboard/classes"
+                to="/dashboard/my-classes"
                 className={({ isActive }) =>
                   isActive ? "active font-semibold" : ""
                 }
@@ -128,6 +128,22 @@ const DashboardLayout = () => {
                 Add Class
               </NavLink>
             </li>
+            <li>
+              <NavLink
+                to="/dashboard/pending-classes"
+                className={({ isActive }) =>
+                  isActive ? "active font-semibold" : ""
+                }
+              >
+                <Settings size={18} />
+                Pending Classes
+              </NavLink>
+            </li>
+            <li>
+  <NavLink to="/dashboard/teacher-requests">
+    Teacher Requests
+  </NavLink>
+</li>
 
             <li>
               <NavLink
