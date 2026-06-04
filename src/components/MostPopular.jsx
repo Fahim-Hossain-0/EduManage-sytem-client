@@ -9,41 +9,26 @@ import { Autoplay, Navigation } from "swiper/modules";
 // ✅ Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
+import ClassCard from "./ClassCard";
+import { useQuery } from "@tanstack/react-query";
+import useAxios from "../hook/useAxios";
+import Loading from "./Loading";
 
 const MostPopular = () => {
-  const [popular, setPopular] = useState([]);
+const axiosInstance = useAxios();
+    const { data: classes = [], isLoading } = useQuery({
+       queryKey: ["approved-classes"],
+        queryFn: async () => {
+            const res = await axiosInstance.get("/all-classes");
+            return res.data.result;
+        },
+    });
 
-  // 🔥 Dummy data (replace later with API)
-  useEffect(() => {
-    const dummyData = [
-      {
-        id: 1,
-        title: "Web Development Bootcamp",
-        image: "https://via.placeholder.com/300x200",
-        students: 1200,
-      },
-      {
-        id: 2,
-        title: "UI/UX Design Mastery",
-        image: "https://via.placeholder.com/300x200",
-        students: 950,
-      },
-      {
-        id: 3,
-        title: "React Advanced Course",
-        image: "https://via.placeholder.com/300x200",
-        students: 800,
-      },
-      {
-        id: 4,
-        title: "Node.js Backend Course",
-        image: "https://via.placeholder.com/300x200",
-        students: 670,
-      },
-    ];
+    if (isLoading) {
+        return <Loading></Loading>;
+    }
 
-    setPopular(dummyData);
-  }, []);
+  
 
   return (
     <section className="mt-20 bg-base-200">
@@ -70,24 +55,9 @@ const MostPopular = () => {
             1024: { slidesPerView: 3 },
           }}
         >
-          {popular.map((item) => (
-            <SwiperSlide  key={item.id}>
-              <div className="card bg-base-100 shadow-xl h-full">
-                <figure>
-                  <img src={item.image} alt={item.title} />
-                </figure>
-
-                <div className="card-body">
-                  <h3 className="card-title">{item.title}</h3>
-                  <p>{item.students} students enrolled</p>
-
-                  <div className="card-actions justify-end">
-                    <button className="btn btn-primary">
-                      Enroll Now
-                    </button>
-                  </div>
-                </div>
-              </div>
+          {classes.map((item) => (
+            <SwiperSlide  key={item._id}>
+              <ClassCard item={item} />
             </SwiperSlide>
           ))}
         </Swiper>

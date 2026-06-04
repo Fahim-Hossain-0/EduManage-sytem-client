@@ -6,7 +6,9 @@ import Feedback from "../../components/Feedback";
 import StatsSection from "../../components/StatsSection";
 import BecomeTeacher from "../../components/BecomeTeacher";
 
+
 const Home = () => {
+  
   return (
     <>
       <Banner></Banner>

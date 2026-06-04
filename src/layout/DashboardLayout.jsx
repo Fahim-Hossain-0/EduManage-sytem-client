@@ -14,18 +14,16 @@ import useAuth from "../hook/useAuth";
 import useUserRole from "../hook/useUserRole";
 
 const DashboardLayout = () => {
-  const {user, logOut} = useAuth()
-  const {role} = useUserRole()
-  
+  const { user, logOut } = useAuth();
+  const { role } = useUserRole();
+
   return (
     <div className="drawer lg:drawer-open min-h-screen">
-      
       {/* Drawer Toggle */}
       <input id="dashboard-drawer" type="checkbox" className="drawer-toggle" />
 
       {/* Main Content */}
       <div className="drawer-content flex flex-col bg-base-200">
-
         {/* Top Navbar */}
         <div className="navbar bg-base-100 shadow-sm px-4 sticky top-0 z-10">
           <div className="flex-none lg:hidden">
@@ -42,10 +40,15 @@ const DashboardLayout = () => {
           </div>
 
           <div className="flex-none">
-            {user && <button onClick={logOut} className="btn btn-error btn-sm text-black">
-              <LogOut size={18} />
-              Logout
-            </button>}
+            {user && (
+              <button
+                onClick={logOut}
+                className="btn btn-error btn-sm text-black"
+              >
+                <LogOut size={18} />
+                Logout
+              </button>
+            )}
           </div>
         </div>
 
@@ -64,22 +67,18 @@ const DashboardLayout = () => {
         ></label>
 
         <aside className="w-72 min-h-full bg-base-100 border-r border-base-300">
-
           {/* Logo */}
           <div className="p-6 border-b border-base-300">
             <Link to="/">
-            <h1 className="text-3xl font-bold text-primary">
-              EduManage
-            </h1>
-            <p className="text-sm opacity-70">
-               <span>{role} Dashboard</span>
-            </p>
+              <h1 className="text-3xl font-bold text-primary">EduManage</h1>
+              <p className="text-sm opacity-70">
+                <span>{role} Dashboard</span>
+              </p>
             </Link>
           </div>
 
           {/* Menu */}
           <ul className="menu p-4 space-y-2 text-base-content">
-
             <li>
               <NavLink
                 to="/dashboard"
@@ -140,10 +139,16 @@ const DashboardLayout = () => {
               </NavLink>
             </li>
             <li>
-  <NavLink to="/dashboard/teacher-requests">
-    Teacher Requests
-  </NavLink>
-</li>
+              <NavLink to="/dashboard/teacher-requests">
+                Teacher Requests
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/dashboard/my-enroll-classes">
+               <BookOpen size={18} />
+                My Enrolled Classes
+              </NavLink>
+            </li>
 
             <li>
               <NavLink
@@ -156,7 +161,6 @@ const DashboardLayout = () => {
                 Home
               </NavLink>
             </li>
-
           </ul>
         </aside>
       </div>

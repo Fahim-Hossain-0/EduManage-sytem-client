@@ -12,6 +12,10 @@ import PendingClasses from "../pages/Dashboard/PendingClasses/PendingClasses";
 import ManageUsers from "../pages/Dashboard/ManageUsers/ManageUsers";
 import TeacherRequest from "../components/TeacherRequest";
 import TeacherRequests from "../pages/Dashboard/TeacherRequests/TeacherRequests";
+import AllClasses from "../pages/AllClasses/AllClasses";
+import ClassDetails from "../components/ClassDetails";
+import Payment from "../pages/Payment/Payment";
+import MyEnrollClasses from "../pages/Dashboard/MyEnrollClasses/MyEnrollClasses";
 
 export const router = createBrowserRouter([
   {
@@ -27,6 +31,18 @@ export const router = createBrowserRouter([
         path: "teacher-request",
         Component: TeacherRequest,
       },
+      {
+        path:"all-classes",
+        Component:AllClasses
+      },
+      {
+        path:"classDetails/:id",
+        Component:ClassDetails
+      },
+      {
+        path:"checkout/:id",
+        Component:Payment
+      }
     ],
   },
   {
@@ -71,6 +87,10 @@ export const router = createBrowserRouter([
         path: "teacher-requests",
         element: <TeacherRequests />,
       },
+      {
+  path: "my-enroll-classes",
+  Component: MyEnrollClasses,
+}
     ],
   },
 ]);
