@@ -7,223 +7,163 @@ import Loading from "../../../components/Loading";
 import { useState } from "react";
 
 const MyClasses = () => {
+  const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
 
-    const axiosSecure = useAxiosSecure();
-    const { user } = useAuth();
+  const [status, setStatus] = useState("approved");
 
-    const [status, setStatus] = useState("approved");
+  // pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const limit = 5;
 
-    // pagination state
-    const [currentPage, setCurrentPage] = useState(1);
-    const limit = 5;
+  const { data, isLoading } = useQuery({
+    queryKey: ["myClasses", user?.email, status, currentPage],
 
-    const {
-        data,
-        isLoading,
-    } = useQuery({
+    enabled: !!user?.email,
 
-        queryKey: [
-            "myClasses",
-            user?.email,
-            status,
-            currentPage
-        ],
+    queryFn: async () => {
+      const res = await axiosSecure.get(
+        `/my-classes/${user.email}?status=${status}&page=${currentPage}&limit=${limit}`,
+      );
 
-        enabled: !!user?.email,
+      console.log("my classes", res.data);
+      return res.data;
+    },
+  });
 
-        queryFn: async () => {
+  const myClasses = data?.result || [];
+  const totalClasses = data?.totalClasses || 0;
 
-            const res = await axiosSecure.get(
-                `/my-classes/${user.email}?status=${status}&page=${currentPage}&limit=${limit}`
-            );
+  const totalPages = Math.ceil(totalClasses / limit);
 
-            return res.data;
-        },
-    });
+  if (isLoading) {
+    return <Loading />;
+  }
 
-    const myClasses = data?.result || [];
-    const totalClasses = data?.totalClasses || 0;
+  return (
+    <div className="p-6">
+      {/* Header */}
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-4xl font-bold">My Classes</h2>
 
-    const totalPages = Math.ceil(totalClasses / limit);
+        <select
+          className="select select-bordered"
+          value={status}
+          onChange={(e) => {
+            setStatus(e.target.value);
+            setCurrentPage(1);
+          }}
+        >
+          <option value="approved">Approved</option>
+          <option value="pending">Pending</option>
+          <option value="rejected">Rejected</option>
+        </select>
+      </div>
 
-    if (isLoading) {
-        return <Loading />;
-    }
+      {myClasses.length === 0 ? (
+        <div className="text-center py-20">
+          <h2 className="text-2xl font-semibold">No Classes Added Yet</h2>
+        </div>
+      ) : (
+        <>
+          {/* Table */}
+          <div className="overflow-x-auto bg-base-100 shadow-xl rounded-2xl">
+            <table className="table">
+              <thead className="bg-base-200">
+                <tr>
+                  <th>#</th>
+                  <th>Image</th>
+                  <th>Title</th>
+                  <th>Price</th>
+                  <th>Status</th>
+                  <th>Total Enrollment</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
 
-    return (
-        <div className="p-6">
+              <tbody>
+                {myClasses.map((cls, index) => (
+                  <tr key={cls._id}>
+                    <td>{(currentPage - 1) * limit + index + 1}</td>
 
-            {/* Header */}
-            <div className="flex justify-between items-center mb-6">
+                    <td>
+                      <div className="avatar">
+                        <div className="w-16 rounded">
+                          <img src={cls.image} alt={cls.title} />
+                        </div>
+                      </div>
+                    </td>
 
-                <h2 className="text-4xl font-bold">
-                    My Classes
-                </h2>
+                    <td className="font-semibold">{cls.title}</td>
 
-                <select
-                    className="select select-bordered"
-                    value={status}
-                    onChange={(e) => {
-                        setStatus(e.target.value);
-                        setCurrentPage(1);
-                    }}
-                >
-                    <option value="approved">Approved</option>
-                    <option value="pending">Pending</option>
-                    <option value="rejected">Rejected</option>
-                </select>
+                    <td>${cls.price}</td>
 
-            </div>
-
-            {
-                myClasses.length === 0 ? (
-                    <div className="text-center py-20">
-                        <h2 className="text-2xl font-semibold">
-                            No Classes Added Yet
-                        </h2>
-                    </div>
-                ) : (
-
-                    <>
-                        {/* Table */}
-                        <div className="overflow-x-auto bg-base-100 shadow-xl rounded-2xl">
-
-                            <table className="table">
-
-                                <thead className="bg-base-200">
-
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Image</th>
-                                        <th>Title</th>
-                                        <th>Price</th>
-                                        <th>Status</th>
-                                        <th>Total Enrollment</th>
-                                        <th>Actions</th>
-                                    </tr>
-
-                                </thead>
-
-                                <tbody>
-
-                                    {
-                                        myClasses.map((cls, index) => (
-
-                                            <tr key={cls._id}>
-
-                                                <td>
-                                                    {(currentPage - 1) * limit + index + 1}
-                                                </td>
-
-                                                <td>
-                                                    <div className="avatar">
-                                                        <div className="w-16 rounded">
-                                                            <img
-                                                                src={cls.image}
-                                                                alt={cls.title}
-                                                            />
-                                                        </div>
-                                                    </div>
-                                                </td>
-
-                                                <td className="font-semibold">
-                                                    {cls.title}
-                                                </td>
-
-                                                <td>
-                                                    ${cls.price}
-                                                </td>
-
-                                                <td>
-
-                                                    <span
-                                                        className={`
+                    <td>
+                      <span
+                        className={`
                                                             badge
-                                                            ${cls.status === "approved"
+                                                            ${
+                                                              cls.status ===
+                                                              "approved"
                                                                 ? "badge-success"
-                                                                : cls.status === "rejected"
-                                                                    ? "badge-error"
-                                                                    : "badge-warning"
+                                                                : cls.status ===
+                                                                    "rejected"
+                                                                  ? "badge-error"
+                                                                  : "badge-warning"
                                                             }
                                                         `}
-                                                    >
-                                                        {cls.status}
-                                                    </span>
+                      >
+                        {cls.status}
+                      </span>
+                    </td>
 
-                                                </td>
+                    <td>{cls.totalEnrollment}</td>
 
-                                                <td>
-                                                    {cls.totalEnrollment}
-                                                </td>
+                    <td>
+                      <button className="btn btn-sm btn-primary text-black">
+                        Update
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
 
-                                                <td>
+          {/* Pagination */}
+          <div className="flex justify-center mt-8 gap-2">
+            <button
+              className="btn btn-sm"
+              disabled={currentPage === 1}
+              onClick={() => setCurrentPage(currentPage - 1)}
+            >
+              Prev
+            </button>
 
-                                                    <button
-                                                        className="btn btn-sm btn-primary text-black"
-                                                    >
-                                                        Update
-                                                    </button>
+            {[...Array(totalPages).keys()].map((number) => (
+              <button
+                key={number}
+                onClick={() => setCurrentPage(number + 1)}
+                className={`btn btn-sm ${
+                  currentPage === number + 1 ? "btn-primary" : ""
+                }`}
+              >
+                {number + 1}
+              </button>
+            ))}
 
-                                                </td>
-
-                                            </tr>
-                                        ))
-                                    }
-
-                                </tbody>
-
-                            </table>
-
-                        </div>
-
-                        {/* Pagination */}
-                        <div className="flex justify-center mt-8 gap-2">
-
-                            <button
-                                className="btn btn-sm"
-                                disabled={currentPage === 1}
-                                onClick={() =>
-                                    setCurrentPage(currentPage - 1)
-                                }
-                            >
-                                Prev
-                            </button>
-
-                            {
-                                [...Array(totalPages).keys()].map(number => (
-
-                                    <button
-                                        key={number}
-                                        onClick={() =>
-                                            setCurrentPage(number + 1)
-                                        }
-                                        className={`btn btn-sm ${
-                                            currentPage === number + 1
-                                                ? "btn-primary"
-                                                : ""
-                                        }`}
-                                    >
-                                        {number + 1}
-                                    </button>
-                                ))
-                            }
-
-                            <button
-                                className="btn btn-sm"
-                                disabled={currentPage === totalPages}
-                                onClick={() =>
-                                    setCurrentPage(currentPage + 1)
-                                }
-                            >
-                                Next
-                            </button>
-
-                        </div>
-                    </>
-                )
-            }
-        </div>
-    );
+            <button
+              className="btn btn-sm"
+              disabled={currentPage === totalPages}
+              onClick={() => setCurrentPage(currentPage + 1)}
+            >
+              Next
+            </button>
+          </div>
+        </>
+      )}
+    </div>
+  );
 };
 
 export default MyClasses;

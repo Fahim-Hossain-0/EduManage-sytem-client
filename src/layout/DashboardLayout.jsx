@@ -15,7 +15,7 @@ import useUserRole from "../hook/useUserRole";
 
 const DashboardLayout = () => {
   const { user, logOut } = useAuth();
-  const { role } = useUserRole();
+  const { role ,roleLoading} = useUserRole();
 
   return (
     <div className="drawer lg:drawer-open min-h-screen">
@@ -92,6 +92,9 @@ const DashboardLayout = () => {
               </NavLink>
             </li>
 
+            {!roleLoading && role === "admin" &&
+            <>
+
             <li>
               <NavLink
                 to="/dashboard/manage-users"
@@ -103,7 +106,26 @@ const DashboardLayout = () => {
                 Users
               </NavLink>
             </li>
+            <li>
+              <NavLink to="/dashboard/teacher-requests">
+                Teacher Requests
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/dashboard/pending-classes"
+                className={({ isActive }) =>
+                  isActive ? "active font-semibold" : ""
+                }
+              >
+                <Settings size={18} />
+                Pending Classes
+              </NavLink>
+            </li>
+            </>}
 
+            {!roleLoading && role === "teacher" &&
+            <>
             <li>
               <NavLink
                 to="/dashboard/my-classes"
@@ -127,22 +149,10 @@ const DashboardLayout = () => {
                 Add Class
               </NavLink>
             </li>
-            <li>
-              <NavLink
-                to="/dashboard/pending-classes"
-                className={({ isActive }) =>
-                  isActive ? "active font-semibold" : ""
-                }
-              >
-                <Settings size={18} />
-                Pending Classes
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/dashboard/teacher-requests">
-                Teacher Requests
-              </NavLink>
-            </li>
+            
+            </>
+            }
+            
             <li>
               <NavLink to="/dashboard/my-enroll-classes">
                <BookOpen size={18} />

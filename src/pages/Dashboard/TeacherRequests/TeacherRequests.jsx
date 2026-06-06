@@ -140,9 +140,15 @@ const TeacherRequests = () => {
 
                 {/* Status */}
                 <td>
-                  <span className="badge badge-warning capitalize">
-                    {request.status}
-                  </span>
+                  <span className={`badge ${
+  request.status === "pending"
+    ? "badge-warning"
+    : request.status === "accepted"
+    ? "badge-success"
+    : "badge-error"
+}`}>
+  {request.status}
+</span>
                 </td>
 
                 {/* Approve */}

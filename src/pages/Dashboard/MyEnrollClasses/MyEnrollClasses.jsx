@@ -1,14 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-// import useAuth from "../../hook/useAuth";
-// import useAxios from "../../hook/useAxios";
-// import Loading from "../../components/Loading";
 import useAuth from "../../../hook/useAuth";
-import useAxios from "../../../hook/useAxios";
 import Loading from "../../../components/Loading";
+import useAxiosSecure from "../../../hook/useAxiosSecure";
 
 const MyEnrollClasses = () => {
   const { user } = useAuth();
-  const axiosInstance = useAxios();
+
+  const axiosSecure = useAxiosSecure();
 
   const {
     data: enrollments = [],
@@ -21,13 +19,14 @@ const MyEnrollClasses = () => {
     enabled: !!user?.email,
     queryFn: async () => {
       const res =
-        await axiosInstance.get(
+        await axiosSecure.get(
           `/enrollments/${user.email}`
         );
 
       return res.data;
     },
   });
+  console.log(enrollments);
 
   if (isLoading) {
     return <Loading />;
@@ -94,7 +93,7 @@ const MyEnrollClasses = () => {
                         item.enrolledAt
                       ).toLocaleDateString()}
                     </td>
-                    <td>${item.price=0}</td>
+                    <td>${item.price ?? 0}</td>
                   </tr>
                 )
               )}

@@ -16,6 +16,9 @@ import AllClasses from "../pages/AllClasses/AllClasses";
 import ClassDetails from "../components/ClassDetails";
 import Payment from "../pages/Payment/Payment";
 import MyEnrollClasses from "../pages/Dashboard/MyEnrollClasses/MyEnrollClasses";
+import TeacherRouter from "./TeacherRouter";
+import Error from "../pages/Error/Error";
+import AdminRoute from "./AdminRouter";
 
 export const router = createBrowserRouter([
   {
@@ -29,20 +32,35 @@ export const router = createBrowserRouter([
       },
       {
         path: "teacher-request",
-        Component: TeacherRequest,
+        // Component: TeacherRequest,
+        element: (
+          <PrivateRouter>
+            <TeacherRequest />
+          </PrivateRouter>
+        ),
       },
       {
-        path:"all-classes",
-        Component:AllClasses
+        path: "all-classes",
+        Component: AllClasses,
       },
       {
-        path:"classDetails/:id",
-        Component:ClassDetails
+        path: "classDetails/:id",
+        // Component:ClassDetails
+        element: (
+          <PrivateRouter>
+            <ClassDetails />
+          </PrivateRouter>
+        ),
       },
       {
-        path:"checkout/:id",
-        Component:Payment
-      }
+        path: "checkout/:id",
+        // Component:Payment
+        element: (
+          <PrivateRouter>
+            <Payment />
+          </PrivateRouter>
+        ),
+      },
     ],
   },
   {
@@ -69,28 +87,48 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "add-class",
-        Component: AddClass,
+        // Component: AddClass,
+        element: (
+          <TeacherRouter>
+            <AddClass />
+          </TeacherRouter>
+        ),
       },
       {
         path: "my-classes",
-        Component: MyClasses,
+        // Component: MyClasses,
+        element: (
+          <TeacherRouter>
+            <MyClasses />
+          </TeacherRouter>
+        ),
       },
       {
         path: "pending-classes",
-        Component: PendingClasses,
+        // Component: PendingClasses,
+        element: (
+         <AdminRoute> 
+            <PendingClasses />
+          </AdminRoute>
+        ),
       },
       {
         path: "manage-users",
-        Component: ManageUsers,
+        // Component: ManageUsers,
+        element:<AdminRoute><ManageUsers /></AdminRoute>
       },
       {
         path: "teacher-requests",
-        element: <TeacherRequests />,
+        element: <AdminRoute><TeacherRequests /></AdminRoute>
       },
       {
-  path: "my-enroll-classes",
-  Component: MyEnrollClasses,
-}
+        path: "my-enroll-classes",
+        Component: MyEnrollClasses,
+      },
     ],
+  },
+  {
+    path: "/error",
+    Component: Error,
   },
 ]);

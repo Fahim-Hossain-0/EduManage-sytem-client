@@ -6,6 +6,7 @@ import useAxios from "../hook/useAxios";
 const ClassDetails = () => {
     const { id } = useParams();
     const axiosInstance = useAxios();
+
     const navigate = useNavigate();
     const { data: classInfo = {}, isLoading } = useQuery({
         queryKey: ["class-details", id],

@@ -1,18 +1,20 @@
 // src/components/StatsSection.jsx
 
 import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../hook/useAxiosSecure";
+import useAxios from "../hook/useAxios";
+
+
 
 const StatsSection = () => {
 
-    const axiosSecure = useAxiosSecure();
+    const axiosInstance = useAxios();
 
     // classes stats
     const { data: classData = {} } = useQuery({
         queryKey: ["classes-stats"],
         queryFn: async () => {
 
-            const res = await axiosSecure.get(
+            const res = await axiosInstance.get(
                 "/all-classes?status=approved"
             );
 
@@ -25,7 +27,7 @@ const StatsSection = () => {
         queryKey: ["users"],
         queryFn: async () => {
 
-            const res = await axiosSecure.get(
+            const res = await axiosInstance.get(
                 "/all-users"
             );
 

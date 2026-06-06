@@ -4,15 +4,16 @@ import { useEffect, useState } from "react";
 
 import { useNavigate } from "react-router";
 
-import useAxios from "../../hook/useAxios";
+// import useAxios from "../../hook/useAxios";
 import useAuth from "../../hook/useAuth";
+import useAxiosSecure from "../../hook/useAxiosSecure";
 
 const CheckoutForm = ({ classData }) => {
   const stripe = useStripe();
 
   const elements = useElements();
 
-  const axiosInstance = useAxios();
+  const axiosSecure = useAxiosSecure();
 
   const navigate = useNavigate();
 
@@ -26,7 +27,7 @@ const CheckoutForm = ({ classData }) => {
 
   useEffect(() => {
     if (classData?.price) {
-      axiosInstance
+      axiosSecure
         .post("/create-payment-intent", {
           price: classData.price,
         })
@@ -34,7 +35,7 @@ const CheckoutForm = ({ classData }) => {
           setClientSecret(res.data.clientSecret);
         });
     }
-  }, [classData, axiosInstance]);
+  }, [classData, axiosSecure]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -118,11 +119,11 @@ const CheckoutForm = ({ classData }) => {
 };
 
       try {
-        await axiosInstance.post("/payments", paymentInfo);
+        await axiosSecure.post("/payments", paymentInfo);
 
-        await axiosInstance.post("/enrollments", enrollmentInfo);
+        await axiosSecure.post("/enrollments", enrollmentInfo);
 
-        await axiosInstance.patch(`/classes/enroll/${classData._id}`);
+        await axiosSecure.patch(`/classes/enroll/${classData._id}`);
 
         navigate("/dashboard/my-enroll-classes");
       } catch (err) {
