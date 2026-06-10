@@ -1,7 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import useAuth from "../../../hook/useAuth";
+// import useAuth from "../../../hook/useAuth";
 import Loading from "../../../components/Loading";
+// import useAxiosSecure from "../../../hook/useAxiosSecure";
+import { Link } from "react-router";
 import useAxiosSecure from "../../../hook/useAxiosSecure";
+import useAuth from "../../../hook/useAuth";
 
 const MyEnrollClasses = () => {
   const { user } = useAuth();
@@ -38,69 +41,43 @@ const MyEnrollClasses = () => {
         My Enrolled Classes
       </h2>
 
-      {enrollments.length === 0 ? (
-        <div className="text-center py-20">
-          <h3 className="text-xl font-semibold">
-            No enrolled classes found
-          </h3>
-        </div>
-      ) : (
-        <div className="overflow-x-auto">
-          <table className="table">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Image</th>
-                <th>Class</th>
-                <th>Transaction ID</th>
-                <th>Enroll Date</th>
-                <th>Price</th>
-              </tr>
-            </thead>
+     
 
-            <tbody>
-              {enrollments.map(
-                (item, index) => (
-                  <tr key={item._id}>
-                    <td>
-                      {index + 1}
-                    </td>
+<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+  {enrollments.map((item) => (
+    <div
+      key={item._id}
+      className="card bg-base-100 shadow-xl"
+    >
+      <figure>
+        <img
+          src={item.classImage}
+          alt={item.classTitle}
+          className="h-56 w-full object-cover"
+        />
+      </figure>
 
-                    <td>
-                      <img
-                        src={
-                          item.classImage
-                        }
-                        alt={
-                          item.classTitle
-                        }
-                        className="w-16 h-16 rounded object-cover"
-                      />
-                    </td>
+      <div className="card-body">
+        <h2 className="card-title">
+          {item.classTitle}
+        </h2>
 
-                    <td>
-                      {item.classTitle}
-                    </td>
+        <p>
+          Teacher:
+          {item.teacherName}
+        </p>
 
-                    <td className="max-w-[200px] truncate">
-                      {
-                        item.transactionId
-                      }
-                    </td>
-
-                    <td>
-                      {new Date(
-                        item.enrolledAt
-                      ).toLocaleDateString()}
-                    </td>
-                    <td>${item.price ?? 0}</td>
-                  </tr>
-                )
-              )}
-            </tbody>
-          </table>
-        </div>
-      )}
+        <Link
+          to={`/dashboard/my-enroll-class/${item.classId}`}
+        >
+          <button className="btn btn-primary w-full">
+            Continue
+          </button>
+        </Link>
+      </div>
+    </div>
+  ))}
+</div>
     </div>
   );
 };

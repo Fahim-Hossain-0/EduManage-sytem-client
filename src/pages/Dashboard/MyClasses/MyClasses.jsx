@@ -5,6 +5,7 @@ import useAxiosSecure from "../../../hook/useAxiosSecure";
 import useAuth from "../../../hook/useAuth";
 import Loading from "../../../components/Loading";
 import { useState } from "react";
+import { Link } from "react-router";
 
 const MyClasses = () => {
   const axiosSecure = useAxiosSecure();
@@ -118,12 +119,23 @@ const MyClasses = () => {
                     </td>
 
                     <td>{cls.totalEnrollment}</td>
+                   <td>
+  <div className="flex gap-2">
+    <Link to={`/dashboard/update-class/${cls._id}`}>
+  <button className="btn btn-sm btn-primary text-black">
+    Update
+  </button>
+</Link>
 
-                    <td>
-                      <button className="btn btn-sm btn-primary text-black">
-                        Update
-                      </button>
-                    </td>
+    {cls.status === "approved" && (
+      <Link to={`/dashboard/my-class/${cls._id}`}>
+        <button className="btn btn-sm btn-success">
+          See Details
+        </button>
+      </Link>
+    )}
+  </div>
+</td>
                   </tr>
                 ))}
               </tbody>

@@ -17,7 +17,7 @@ const CheckoutForm = ({ classData }) => {
 
   const navigate = useNavigate();
 
-  const { user } = useAuth();
+  const user = useAuth();
 
   const [clientSecret, setClientSecret] = useState("");
 
@@ -108,13 +108,21 @@ const CheckoutForm = ({ classData }) => {
 
       const enrollmentInfo = {
   classId: classData._id,
+
   classTitle: classData.title,
+
   classImage: classData.image,
-  price: classData.price,
+
+  teacherName: classData.name,
+
   teacherEmail: classData.email,
+
   studentEmail: user.email,
+
   studentName: user.displayName,
+
   transactionId,
+
   enrolledAt: new Date(),
 };
 

@@ -3,11 +3,10 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import useAuth from "../hook/useAuth";
 import useAxiosSecure from "../hook/useAxiosSecure";
-// import useAxiosSecure from "../hook/useAxiosSecure";
 
 
 const TeacherRequest = () => {
-  const { user } = useAuth();
+  const  { user }  = useAuth();
   const axiosSecure = useAxiosSecure();
 
   const {

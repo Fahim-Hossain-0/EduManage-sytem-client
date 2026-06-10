@@ -19,6 +19,10 @@ import MyEnrollClasses from "../pages/Dashboard/MyEnrollClasses/MyEnrollClasses"
 import TeacherRouter from "./TeacherRouter";
 import Error from "../pages/Error/Error";
 import AdminRoute from "./AdminRouter";
+import MyEnrollClassDetails from "../pages/Dashboard/MyEnrollClassDetails/MyEnrollClassDetails";
+import MyClassDetails from "../pages/MyClassDetails/MyClassDetails";
+import AssignmentSubmissions from "../pages/Dashboard/AssignmentSubmissions/AssignmentSubmissions";
+import UpdateClass from "../pages/Dashboard/MyClasses/UpdateClass";
 
 export const router = createBrowserRouter([
   {
@@ -123,8 +127,42 @@ export const router = createBrowserRouter([
       },
       {
         path: "my-enroll-classes",
-        Component: MyEnrollClasses,
+        // Component: MyEnrollClasses,
+        element: <PrivateRouter><MyEnrollClasses /></PrivateRouter>
       },
+      {
+  path:"my-enroll-class/:id",
+  element:
+  <PrivateRouter>
+    <MyEnrollClassDetails/>
+  </PrivateRouter>
+},
+{
+  path:
+    "assignment-submissions/:assignmentId",
+  element: (
+    <TeacherRouter>
+      <AssignmentSubmissions />
+    </TeacherRouter>
+  ),
+},
+{
+  path: "update-class/:id",
+  element: (
+    <TeacherRouter>
+      <UpdateClass />
+    </TeacherRouter>
+  )
+},
+{
+  path: "my-class/:id",
+  element: (
+    <TeacherRouter>
+      <MyClassDetails />
+    </TeacherRouter>
+  ),
+},
+
     ],
   },
   {
