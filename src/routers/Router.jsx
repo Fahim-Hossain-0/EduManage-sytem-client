@@ -20,7 +20,7 @@ import TeacherRouter from "./TeacherRouter";
 import Error from "../pages/Error/Error";
 import AdminRoute from "./AdminRouter";
 import MyEnrollClassDetails from "../pages/Dashboard/MyEnrollClassDetails/MyEnrollClassDetails";
-import MyClassDetails from "../pages/MyClassDetails/MyClassDetails";
+import MyClassDetails from "../pages/Dashboard/MyClassDetails/MyClassDetails";
 import AssignmentSubmissions from "../pages/Dashboard/AssignmentSubmissions/AssignmentSubmissions";
 import UpdateClass from "../pages/Dashboard/MyClasses/UpdateClass";
 
@@ -139,7 +139,7 @@ export const router = createBrowserRouter([
 },
 {
   path:
-    "assignment-submissions/:assignmentId",
+     "assignment-submissions/:id",
   element: (
     <TeacherRouter>
       <AssignmentSubmissions />

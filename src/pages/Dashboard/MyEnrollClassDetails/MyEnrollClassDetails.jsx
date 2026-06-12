@@ -9,6 +9,7 @@ import Swal from "sweetalert2";
 import useAuth from "../../../hook/useAuth";
 import useAxiosSecure from "../../../hook/useAxiosSecure";
 import Loading from "../../../components/Loading";
+import TeachingEvaluationModal from "../../../components/TeachingEvaluationModal";
 
 const MyEnrollClassDetails = () => {
   const { id } = useParams();
@@ -23,14 +24,16 @@ const MyEnrollClassDetails = () => {
     useState(null);
 
   // ======================
-  // Get Assignments
+  // ASSIGNMENTS
   // ======================
 
   const {
     data: assignments = [],
-    isLoading,
+    isLoading: assignmentsLoading,
   } = useQuery({
     queryKey: ["assignments", id],
+
+    enabled: !!id,
 
     queryFn: async () => {
       const res =
@@ -43,11 +46,12 @@ const MyEnrollClassDetails = () => {
   });
 
   // ======================
-  // Get Submitted Assignments
+  // STUDENT SUBMISSIONS
   // ======================
 
   const {
     data: submissions = [],
+    isLoading: submissionsLoading,
   } = useQuery({
     queryKey: [
       "student-submissions",
@@ -55,12 +59,40 @@ const MyEnrollClassDetails = () => {
       id,
     ],
 
-    enabled: !!user?.email,
+    enabled:
+      !!user?.email && !!id,
 
     queryFn: async () => {
       const res =
         await axiosSecure.get(
           `/submissions/${user.email}/${id}`
+        );
+
+      return res.data;
+    },
+  });
+
+  // ======================
+  // CHECK TER SUBMITTED
+  // ======================
+
+  const {
+    data: evaluation,
+    isLoading: evaluationLoading,
+  } = useQuery({
+    queryKey: [
+      "evaluation",
+      id,
+      user?.email,
+    ],
+
+    enabled:
+      !!user?.email && !!id,
+
+    queryFn: async () => {
+      const res =
+        await axiosSecure.get(
+          `/evaluations/${id}/${user.email}`
         );
 
       return res.data;
@@ -73,7 +105,7 @@ const MyEnrollClassDetails = () => {
     );
 
   // ======================
-  // Submit Assignment
+  // SUBMIT ASSIGNMENT
   // ======================
 
   const handleSubmitAssignment =
@@ -107,18 +139,18 @@ const MyEnrollClassDetails = () => {
             new Date(),
         };
 
-        const res =
-          await axiosSecure.post(
-            "/submissions",
-            submissionData
-          );
+        await axiosSecure.post(
+          "/submissions",
+          submissionData
+        );
 
         Swal.fire({
           icon: "success",
           title:
             "Assignment Submitted Successfully",
           timer: 1500,
-          showConfirmButton: false,
+          showConfirmButton:
+            false,
         });
 
         form.reset();
@@ -132,12 +164,7 @@ const MyEnrollClassDetails = () => {
         queryClient.invalidateQueries({
           queryKey: [
             "student-submissions",
-          ],
-        });
-
-        queryClient.invalidateQueries({
-          queryKey: [
-            "assignments",
+            user?.email,
             id,
           ],
         });
@@ -154,7 +181,15 @@ const MyEnrollClassDetails = () => {
       }
     };
 
-  if (isLoading) {
+  // ======================
+  // LOADING
+  // ======================
+
+  if (
+    assignmentsLoading ||
+    submissionsLoading ||
+    evaluationLoading
+  ) {
     return <Loading />;
   }
 
@@ -249,7 +284,33 @@ const MyEnrollClassDetails = () => {
         </table>
       </div>
 
-      {/* Modal */}
+      {/* TER Button */}
+
+      <div className="mt-8">
+        <button
+          disabled={!!evaluation}
+          className="btn btn-primary"
+          onClick={() =>
+            document
+              .getElementById(
+                "evaluation_modal"
+              )
+              .showModal()
+          }
+        >
+          {evaluation
+            ? "Already Submitted"
+            : "Teaching Evaluation"}
+        </button>
+      </div>
+
+      {/* TER Modal */}
+
+      <TeachingEvaluationModal
+        classId={id}
+      />
+
+      {/* Assignment Modal */}
 
       <dialog
         id="submit_modal"
@@ -267,8 +328,8 @@ const MyEnrollClassDetails = () => {
           >
             <textarea
               name="submission"
-              placeholder="Write your answer..."
               className="textarea textarea-bordered w-full mt-4"
+              placeholder="Write your answer..."
               required
             />
 

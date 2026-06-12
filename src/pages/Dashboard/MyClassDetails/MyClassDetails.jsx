@@ -6,8 +6,8 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import Swal from "sweetalert2";
-import useAxiosSecure from "../../hook/useAxiosSecure";
-import Loading from "../../components/Loading";
+import useAxiosSecure from "../../../hook/useAxiosSecure";
+import Loading from "../../../components/Loading";
 
 // import useAxiosSecure from "../../../../hook/useAxiosSecure";
 // import Loading from "../../../../components/Loading";
@@ -24,10 +24,7 @@ const MyClassDetails = () => {
   // =========================
   // Class Progress
   // =========================
-  const {
-    data: progress = {},
-    isLoading: progressLoading,
-  } = useQuery({
+  const {data: progress = {},isLoading: progressLoading,} = useQuery({
     queryKey: ["class-progress", id],
 
     queryFn: async () => {
@@ -57,6 +54,33 @@ const MyClassDetails = () => {
     },
   });
 
+  const {
+  data: evaluations = [],
+  isLoading: evaluationLoading,
+} = useQuery({
+  queryKey: ["evaluations", id],
+
+  queryFn: async () => {
+    const res =
+      await axiosSecure.get(
+        `/evaluations/${id}`
+      );
+
+    return res.data;
+  },
+});
+
+const averageRating =
+  evaluations.length > 0
+    ? (
+        evaluations.reduce(
+          (sum, item) =>
+            sum + item.rating,
+          0
+        ) /
+        evaluations.length
+      ).toFixed(1)
+    : 0;
   // =========================
   // Create Assignment
   // =========================
@@ -284,6 +308,92 @@ const MyClassDetails = () => {
 
         </table>
       </div>
+      <div className="card bg-base-100 shadow-xl mb-6">
+  <div className="card-body text-center">
+
+    <h2 className="text-5xl font-bold">
+      ⭐ {averageRating}
+    </h2>
+
+    <p>
+      Average Rating
+    </p>
+
+  </div>
+</div>
+
+      {/* TER Section */}
+
+<div className="mt-10">
+
+  <h2 className="text-3xl font-bold mb-4">
+    Teaching Evaluation Report
+  </h2>
+
+  <div className="overflow-x-auto bg-base-100 rounded-xl shadow">
+
+    <table className="table">
+
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Student</th>
+          <th>Rating</th>
+          <th>Feedback</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        {evaluations.length === 0 ? (
+          <tr>
+            <td
+              colSpan="5"
+              className="text-center py-8"
+            >
+              No Evaluation Found
+            </td>
+          </tr>
+        ) : (
+          evaluations.map(
+            (item, index) => (
+              <tr key={item._id}>
+
+                <td>
+                  {index + 1}
+                </td>
+
+                <td>
+                  {item.studentName}
+                </td>
+
+                <td>
+                  ⭐ {item.rating}
+                </td>
+
+                <td>
+                  {item.description}
+                </td>
+
+                <td>
+                  {new Date(
+                    item.createdAt
+                  ).toLocaleDateString()}
+                </td>
+
+              </tr>
+            )
+          )
+        )}
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>
 
       {/* Modal */}
       {isOpen && (
