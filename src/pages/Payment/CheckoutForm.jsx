@@ -17,7 +17,7 @@ const CheckoutForm = ({ classData }) => {
 
   const navigate = useNavigate();
 
-  const user = useAuth();
+  const {user} = useAuth();
 
   const [clientSecret, setClientSecret] = useState("");
 
