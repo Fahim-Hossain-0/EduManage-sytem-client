@@ -68,7 +68,7 @@ const Login = () => {
                     </p>
 
                     <img
-                        src="https://i.ibb.co.com/6R6Yc2L/login.png"
+                        src="https://i.ibb.co/6R6Yc2L/login.png"
                         alt="login"
                         className="w-80 mt-10"
                     />

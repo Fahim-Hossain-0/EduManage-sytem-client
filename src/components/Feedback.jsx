@@ -7,14 +7,20 @@ import { Autoplay, Pagination } from "swiper/modules";
 // Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
+import useAxios from "../hook/useAxios";
+
+
+
+  
 
 const Feedback = () => {
   const [feedbacks, setFeedbacks] = useState([]);
+  const axiosInstance = useAxios();
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/feedback") // 🔥 your API
-      .then((res) => res.json())
-      .then((data) => setFeedbacks(data))
+    axiosInstance
+      .get("/api/feedback")
+      .then((res) => setFeedbacks(res.data))
       .catch((err) => console.error(err));
   }, []);
 

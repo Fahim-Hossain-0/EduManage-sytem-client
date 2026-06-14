@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 
 import ClassCard from "../../components/ClassCard";
-import useAxios from "../../hook/useAxios";
 import Loading from "../../components/Loading";
+import useAxios from "../../hook/useAxios";
 
 const AllClasses = () => {
     const axiosInstance = useAxios();
