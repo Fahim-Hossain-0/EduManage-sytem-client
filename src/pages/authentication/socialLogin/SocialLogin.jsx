@@ -27,6 +27,10 @@ const SocialLogin = () => {
 
       // 🔥 Google Login
       const result = await signInWithGoogle();
+      const token =
+  await result.user.getIdToken();
+
+console.log(token);
 
       console.log(result.user);
 
