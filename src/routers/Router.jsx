@@ -23,7 +23,7 @@ import MyEnrollClassDetails from "../pages/Dashboard/MyEnrollClassDetails/MyEnro
 import MyClassDetails from "../pages/Dashboard/MyClassDetails/MyClassDetails";
 import AssignmentSubmissions from "../pages/Dashboard/AssignmentSubmissions/AssignmentSubmissions";
 import UpdateClass from "../pages/Dashboard/MyClasses/UpdateClass";
-import Register from "../pages/authentication/register/Register";
+import Register from "../pages/authentication/register/register";
 
 export const router = createBrowserRouter([
   {
