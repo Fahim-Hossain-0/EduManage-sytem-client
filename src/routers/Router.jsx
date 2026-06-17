@@ -3,7 +3,6 @@ import MainLayout from "../layout/MainLayout";
 import Home from "../pages/home/Home";
 import AuthLayout from "../layout/AuthLayout";
 import login from "../pages/authentication/login/login";
-// import Register from "../pages/authentication/register/register";
 import DashboardLayout from "../layout/DashboardLayout";
 import AddClass from "../pages/Dashboard/AddClass/AddClass";
 import PrivateRouter from "./PrivateRouter";
