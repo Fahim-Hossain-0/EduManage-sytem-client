@@ -24,6 +24,7 @@ import AssignmentSubmissions from "../pages/Dashboard/AssignmentSubmissions/Assi
 import UpdateClass from "../pages/Dashboard/MyClasses/UpdateClass";
 import Register from "../pages/authentication/register/register";
 
+
 export const router = createBrowserRouter([
   {
     path: "/",
