@@ -15,7 +15,7 @@ const ClassDetails = () => {
             return res.data;
         },
     });
-    console.log("class info", classInfo);
+    // console.log("class info", classInfo);
 
 
     if (isLoading) return <Loading></Loading>;

@@ -7,7 +7,7 @@ const AssignmentSubmissions = () => {
   // const { id } = useParams();
   const { id } = useParams();
 
-console.log("Assignment ID:", id);
+// console.log("Assignment ID:", id);
 
   const axiosSecure = useAxiosSecure();
 
@@ -29,7 +29,7 @@ console.log("Assignment ID:", id);
       return res.data;
     },
   });
-  console.log(submissions);
+  // console.log(submissions);
 
   if (isLoading) {
     return <Loading />;

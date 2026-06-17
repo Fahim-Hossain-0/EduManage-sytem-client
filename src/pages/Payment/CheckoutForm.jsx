@@ -135,7 +135,7 @@ const CheckoutForm = ({ classData }) => {
 
         navigate("/dashboard/my-enroll-classes");
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     }
 

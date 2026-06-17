@@ -12,10 +12,23 @@ import {
 } from "lucide-react";
 import useAuth from "../hook/useAuth";
 import useUserRole from "../hook/useUserRole";
+import Loading from "../components/Loading";
 
 const DashboardLayout = () => {
-  const { user, logOut } = useAuth();
-  const { role ,roleLoading} = useUserRole();
+  const { user, logOut, loading } = useAuth();
+  const { role, roleLoading } = useUserRole();
+
+  if (loading || roleLoading) {
+    return <Loading />;
+  }
+
+//   if (
+//   loading ||
+//   roleLoading ||
+//   (user && !role)
+// ) {
+//   return <Loading />;
+// }
 
   return (
     <div className="drawer lg:drawer-open min-h-screen">
@@ -92,70 +105,69 @@ const DashboardLayout = () => {
               </NavLink>
             </li>
 
-            {!roleLoading && role === "admin" &&
-            <>
+            {!roleLoading && role === "admin" && (
+              <>
+                <li>
+                  <NavLink
+                    to="/dashboard/manage-users"
+                    className={({ isActive }) =>
+                      isActive ? "active font-semibold" : ""
+                    }
+                  >
+                    <Users size={18} />
+                    Users
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/dashboard/teacher-requests">
+                    Teacher Requests
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/dashboard/pending-classes"
+                    className={({ isActive }) =>
+                      isActive ? "active font-semibold" : ""
+                    }
+                  >
+                    <Settings size={18} />
+                    Pending Classes
+                  </NavLink>
+                </li>
+              </>
+            )}
 
-            <li>
-              <NavLink
-                to="/dashboard/manage-users"
-                className={({ isActive }) =>
-                  isActive ? "active font-semibold" : ""
-                }
-              >
-                <Users size={18} />
-                Users
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/dashboard/teacher-requests">
-                Teacher Requests
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/dashboard/pending-classes"
-                className={({ isActive }) =>
-                  isActive ? "active font-semibold" : ""
-                }
-              >
-                <Settings size={18} />
-                Pending Classes
-              </NavLink>
-            </li>
-            </>}
+            {!roleLoading && role === "teacher" && (
+              <>
+                <li>
+                  <NavLink
+                    to="/dashboard/my-classes"
+                    className={({ isActive }) =>
+                      isActive ? "active font-semibold" : ""
+                    }
+                  >
+                    <BookOpen size={18} />
+                    My Classes
+                  </NavLink>
+                </li>
 
-            {!roleLoading && role === "teacher" &&
-            <>
-            <li>
-              <NavLink
-                to="/dashboard/my-classes"
-                className={({ isActive }) =>
-                  isActive ? "active font-semibold" : ""
-                }
-              >
-                <BookOpen size={18} />
-                My Classes
-              </NavLink>
-            </li>
+                <li>
+                  <NavLink
+                    to="/dashboard/add-class"
+                    className={({ isActive }) =>
+                      isActive ? "active font-semibold" : ""
+                    }
+                  >
+                    <Settings size={18} />
+                    Add Class
+                  </NavLink>
+                </li>
+              </>
+            )}
 
-            <li>
-              <NavLink
-                to="/dashboard/add-class"
-                className={({ isActive }) =>
-                  isActive ? "active font-semibold" : ""
-                }
-              >
-                <Settings size={18} />
-                Add Class
-              </NavLink>
-            </li>
-            
-            </>
-            }
-            
             <li>
               <NavLink to="/dashboard/my-enroll-classes">
-               <BookOpen size={18} />
+                <BookOpen size={18} />
                 My Enrolled Classes
               </NavLink>
             </li>

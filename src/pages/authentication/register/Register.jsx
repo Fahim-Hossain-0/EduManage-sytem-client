@@ -59,7 +59,7 @@ const Register = () => {
         
       }).then(() => {
         navigate(from);
-        console.log("Profile updated successfully");
+        // console.log("Profile updated successfully");
       }).catch((error) => {
         console.error("Error updating profile:", error);
       } );
@@ -80,7 +80,7 @@ const Register = () => {
         userInfo
       );
 
-      console.log(res.data);
+      // console.log(res.data);
 
       // 🔥 Success message
       toast.success("Registration successful!");
@@ -119,7 +119,7 @@ const Register = () => {
       // Prevent empty upload
       if (!image) return;
 
-      console.log(image);
+      // console.log(image);
 
       // 🔥 Form data
       const formData = new FormData();
@@ -134,7 +134,7 @@ const Register = () => {
         formData
       );
 
-      console.log(res.data);
+      // console.log(res.data);
 
       // 🔥 Save uploaded image URL
       setProfilePic(res.data.data.url);

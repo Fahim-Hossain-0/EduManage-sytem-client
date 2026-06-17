@@ -59,7 +59,7 @@ const AddClass = () => {
                 classData
             );
 
-            console.log(classData);
+            // console.log(classData);
 
             if (classRes.data.data.insertedId) {
                 
@@ -76,7 +76,7 @@ const AddClass = () => {
 }
 
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             toast.error("Failed to add class");
         }
     };

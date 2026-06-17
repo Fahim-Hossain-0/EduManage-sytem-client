@@ -27,7 +27,7 @@ const MyClasses = () => {
         `/my-classes/${user.email}?status=${status}&page=${currentPage}&limit=${limit}`,
       );
 
-      console.log("my classes", res.data);
+      // console.log("my classes", res.data);
       return res.data;
     },
   });

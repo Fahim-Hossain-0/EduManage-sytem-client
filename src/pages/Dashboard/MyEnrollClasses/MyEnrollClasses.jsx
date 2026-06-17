@@ -29,7 +29,7 @@ const MyEnrollClasses = () => {
       return res.data;
     },
   });
-  console.log(enrollments);
+  // console.log(enrollments);
 
   if (isLoading) {
     return <Loading />;

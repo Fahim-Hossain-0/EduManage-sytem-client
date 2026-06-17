@@ -30,9 +30,9 @@ const SocialLogin = () => {
       const token =
   await result.user.getIdToken();
 
-console.log(token);
+// console.log(token);
 
-      console.log(result.user);
+      // console.log(result.user);
 
       // 🔥 User Info
       const userInfo = {
@@ -50,7 +50,7 @@ console.log(token);
         userInfo
       );
 
-      console.log(res.data);
+      // console.log(res.data);
 
       toast.success("Login Successful");
 

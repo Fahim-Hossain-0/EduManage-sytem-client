@@ -3,7 +3,7 @@ import MainLayout from "../layout/MainLayout";
 import Home from "../pages/home/Home";
 import AuthLayout from "../layout/AuthLayout";
 import login from "../pages/authentication/login/login";
-import Register from "../pages/authentication/register/register";
+// import Register from "../pages/authentication/register/register";
 import DashboardLayout from "../layout/DashboardLayout";
 import AddClass from "../pages/Dashboard/AddClass/AddClass";
 import PrivateRouter from "./PrivateRouter";
@@ -23,6 +23,7 @@ import MyEnrollClassDetails from "../pages/Dashboard/MyEnrollClassDetails/MyEnro
 import MyClassDetails from "../pages/Dashboard/MyClassDetails/MyClassDetails";
 import AssignmentSubmissions from "../pages/Dashboard/AssignmentSubmissions/AssignmentSubmissions";
 import UpdateClass from "../pages/Dashboard/MyClasses/UpdateClass";
+import Register from "../pages/authentication/register/Register";
 
 export const router = createBrowserRouter([
   {

@@ -169,7 +169,7 @@ const MyEnrollClassDetails = () => {
           ],
         });
       } catch (error) {
-        console.log(error);
+        // console.log(error);
 
         Swal.fire({
           icon: "warning",
