@@ -4,7 +4,7 @@ import axios from "axios";
 
 const axiosSecure = axios.create({
 //   baseURL: "http://localhost:5000",
-baseURL: "https://edu-manage-system-server.vercel.app",
+    baseURL: import.meta.env.VITE_API_URL
 });
 
 const useAxiosSecure = () => {
