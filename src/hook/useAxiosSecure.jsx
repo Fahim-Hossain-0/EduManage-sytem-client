@@ -1,6 +1,6 @@
 import axios from "axios";
-import { useEffect } from "react";
-import useAuth from "./useAuth";
+// import { useEffect } from "react";
+// import useAuth from "./useAuth";
 
 const axiosSecure = axios.create({
 //   baseURL: "http://localhost:5000",
@@ -8,25 +8,25 @@ baseURL: "https://edu-manage-system-server.vercel.app",
 });
 
 const useAxiosSecure = () => {
-  const { user } = useAuth();
+  // const { user } = useAuth();
 
-  useEffect(() => {
-    const interceptor = axiosSecure.interceptors.request.use(
-      async (config) => {
-        if (user) {
-          const token = await user.getIdToken();
+  // useEffect(() => {
+  //   const interceptor = axiosSecure.interceptors.request.use(
+  //     async (config) => {
+  //       if (user) {
+  //         const token = await user.getIdToken();
 
-          config.headers.Authorization = `Bearer ${token}`;
-        }
+  //         config.headers.Authorization = `Bearer ${token}`;
+  //       }
 
-        return config;
-      }
-    );
+  //       return config;
+  //     }
+  //   );
 
-    return () => {
-      axiosSecure.interceptors.request.eject(interceptor);
-    };
-  }, [user]);
+  //   return () => {
+  //     axiosSecure.interceptors.request.eject(interceptor);
+  //   };
+  // }, [user]);
 
   return axiosSecure;
 };
