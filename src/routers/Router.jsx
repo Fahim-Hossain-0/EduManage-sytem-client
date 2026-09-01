@@ -1,3 +1,5 @@
+import DashboardOverview from "../pages/Dashboard/DashboardOverview";
+import Profile from "../pages/Dashboard/Profile/Profile";
 import { createBrowserRouter } from "react-router";
 import MainLayout from "../layout/MainLayout";
 import Home from "../pages/home/Home";
@@ -92,6 +94,10 @@ export const router = createBrowserRouter([
     ),
     children: [
       {
+        index: true,
+        element: <DashboardOverview />
+      },
+      {
         path: "add-class",
         // Component: AddClass,
         element: (
@@ -131,6 +137,10 @@ export const router = createBrowserRouter([
         path: "my-enroll-classes",
         // Component: MyEnrollClasses,
         element: <PrivateRouter><MyEnrollClasses /></PrivateRouter>
+      },
+      {
+        path: "profile",
+        element: <PrivateRouter><Profile /></PrivateRouter>
       },
       {
   path:"my-enroll-class/:id",

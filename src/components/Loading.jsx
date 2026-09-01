@@ -1,17 +1,9 @@
-// src/components/Loading.jsx
-
 const Loading = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-base-100">
-      <div className="flex flex-col items-center gap-4">
-        
-        {/* Spinner */}
-        <span className="loading loading-spinner loading-lg text-primary"></span>
-
-        {/* Text */}
-        <p className="text-lg font-semibold text-base-content">
-          Loading...
-        </p>
+    <div className="min-h-[60vh] flex items-center justify-center">
+      <div className="flex flex-col items-center gap-3">
+        <span className="loading loading-spinner loading-md text-primary"></span>
+        <p className="text-sm font-medium text-zinc-500">Loading...</p>
       </div>
     </div>
   );
