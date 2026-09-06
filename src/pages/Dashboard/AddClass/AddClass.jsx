@@ -146,7 +146,11 @@ const AddClass = () => {
                     <div className="p-4">
                         <p className="font-bold text-slate-950 text-lg truncate">{title || "Your class title"}</p>
                         <p className="text-sm text-slate-500 mb-3">By {user?.displayName}</p>
-                        <p className="font-bold text-slate-950 text-xl">${price || "0"}</p>
+                        <div className="flex items-center justify-between">
+                            <p className="font-bold text-slate-950 text-xl">${price || "0"}</p>
+                            <span className="text-xs font-semibold text-cyan-700 bg-cyan-50 px-3 py-1 rounded-full">0 learners</span>
+                        </div>
+                        <p className="text-slate-600 text-sm mt-3 line-clamp-2 leading-relaxed">{description || "Class description will appear here..."}</p>
                     </div>
                 </div>
             </div>

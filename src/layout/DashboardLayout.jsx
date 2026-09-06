@@ -76,7 +76,7 @@ const DashboardLayout = () => {
           <NavLink to="/dashboard/my-enroll-classes" className={({ isActive }) => `flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-colors ${isActive ? activeLink : inactiveLink}`}>
             <BookOpen size={20} /> My Enrollments
           </NavLink>
-          <NavLink to="/dashboard/profile" className={({ isActive }) => `flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-colors ${isActive ? activeLink : inactiveLink}`}>
+          <NavLink to="/dashboard/profile" className={({ isActive }) => `flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-colors ${isActive ? 'bg-purple-50 text-purple-700' : inactiveLink}`}>
             <User size={20} /> Profile
           </NavLink>
         </nav>

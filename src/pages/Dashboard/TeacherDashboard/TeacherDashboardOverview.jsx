@@ -39,7 +39,7 @@ const TeacherDashboardOverview = () => {
                         <p className="text-slate-600">Keep track of your classes, learners, and assignments from one place.</p>
                     </div>
                     <div className="flex gap-3">
-                        <Link to="/dashboard/add-class" className="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition-all">
+                        <Link to="/dashboard/add-class" className="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition-all shadow-sm shadow-blue-600/20">
                             <Plus size={18} /> Add New Class
                         </Link>
                     </div>
@@ -48,13 +48,13 @@ const TeacherDashboardOverview = () => {
             </div>
 
             {/* KPI Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {[
                     { label: "My Classes", value: totalClasses, icon: BookOpen, color: "text-blue-600", bg: "bg-blue-50" },
                     { label: "Total Learners", value: totalEnrollment, icon: Users, color: "text-cyan-600", bg: "bg-cyan-50" },
                     { label: "Pending Classes", value: pendingClasses, icon: ClipboardCheck, color: "text-amber-600", bg: "bg-amber-50" },
                 ].map((stat, i) => (
-                    <div key={i} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <div key={i} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm transition-shadow hover:shadow-md">
                         <div className="flex items-center gap-4 mb-4">
                             <div className={`p-3 rounded-xl ${stat.bg} ${stat.color}`}>
                                 <stat.icon size={24} />
@@ -76,8 +76,8 @@ const TeacherDashboardOverview = () => {
                                 <img src={cls.image} alt={cls.title} className="w-full h-40 rounded-xl object-cover mb-4" />
                                 <h4 className="font-bold text-lg text-slate-950 mb-1">{cls.title}</h4>
                                 <p className="text-sm text-slate-500 mb-4">{cls.totalEnrollment || 0} students enrolled</p>
-                                <div className="flex justify-between items-center">
-                                    <span className={`px-3 py-1 rounded-full text-xs font-semibold ${cls.status === 'approved' ? 'bg-green-50 text-green-700' : 'bg-amber-50 text-amber-700'}`}>
+                                <div className="flex justify-between items-center mt-4">
+                                    <span className={`px-3 py-1 rounded-full text-xs font-semibold ${cls.status === 'approved' ? 'bg-green-50 text-green-700' : cls.status === 'pending' ? 'bg-amber-50 text-amber-700' : 'bg-red-50 text-red-700'}`}>
                                         {cls.status}
                                     </span>
                                     <Link to={`/dashboard/my-class/${cls._id}`} className="text-blue-600 font-semibold text-sm flex items-center gap-1 hover:text-blue-700">
